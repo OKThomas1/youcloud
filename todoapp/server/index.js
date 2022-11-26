@@ -5,9 +5,8 @@ app.use(express.json())
 var connection = require('./database').databaseConnection
 
 app.get("/", (req, res) => {
-    let sql = 'SELECT * FROM todoapp'
 
-    connection.query(sql, (err, result) => {
+    connection.query('SELECT * FROM todoapp', (err, result) => {
         if (err) throw err
         //console.log(result)
         res.send(result)
@@ -15,18 +14,39 @@ app.get("/", (req, res) => {
 })
 
 app.post("/", (req, res) => {
-    console.log(req.body)
+    //console.log(req.body)
     const todo = req.body.todo
     const postdate = req.body.postdate
 
     connection.query('INSERT INTO todoapp (todo, postdate) VALUES (?,?)', [todo, postdate], (err, result) => {
         if (err) throw err
-        console.log(result)
+        //console.log(result)
         res.send(result)
     })
 })
 
-app.delete("/:id", (req, res) => {})
+app.put("/:id", (req,res) => {
+    //console.log(req.body)
+    const upid = req.params.id
+    const completed = req.body.completed
+
+    connection.query('UPDATE todoapp SET completed=? WHERE id=?', [completed,upid], (err, result) => {
+        if (err) throw err
+        //console.log(result)
+        res.send(result)
+
+    })
+})
+
+app.delete("/:id", (req, res) => {
+    const delid = req.params.id
+
+    connection.query('DELETE FROM todoapp WHERE id=?',delid, (err, result) => {
+        if (err) throw err
+        console.log(result)
+        res.send(result)
+    })
+})
 
 app.listen(3001, () => console.log("server is running on port 3001"))
 
