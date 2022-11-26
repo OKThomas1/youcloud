@@ -21,7 +21,7 @@
   <nav class="navbar navbar-expand-lg navbar-light bg-light mb-5">
     <div class="container">
       <Link to="/"><img src="https://cdn.discordapp.com/attachments/1041569265813291048/1045169599433416744/logocroppped.png" alt="youCloud" /></Link>
-			<a href="/logout" class="navbar-brand">Logout</a>
+			<a href="/logout/" class="navbar-brand">Logout</a>
     </div>
   </nav>
       
