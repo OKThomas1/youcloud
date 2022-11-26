@@ -1,20 +1,39 @@
 <script>
+  import axios from "axios"
   import { Link } from "svelte-routing"
+	import Cookies from "js-cookie"
 
   let loading = true
   let error = null
-  let websites = [{name: "testscript", url: "www.google.com", id: 1}]
-  try {
-    //let websites = await axios.get("/api/website")
-  } catch (err) {
+  let websites = []
 
-  }
-  const submit = event => {}
-  // const delete = (id) => {
-  //     axios.delete(`/api/website/{id}`)
-  // }
+	axios.get("/api/websites", {headers: {"X-CSRFTOKEN": Cookies.get("csrftoken")}}).then(res => {
+		console.log(res.data)
+		websites = res.data 
+		loading = false
+	}).catch(err => {
+		console.error(err)
+		error = "Could not get website"
+		loading = false
+	})
+
+	const remove = (id)  =>{
+		axios.delete(`/api/websites/${id}`, {headers: {"X-CSRFTOKEN": Cookies.get("csrftoken")}}).then(res => {
+			websites = websites.filter(w => w.id !== id)
+		}).catch(err => {
+			console.error(err)
+			error = "Could not delete website"
+		})
+	}
 </script>
 
+{#if loading}
+  <div class="d-flex justify-content-center align-items-center">
+    <div class="my-5 spinner-border text-primary" style="width: 10rem; height: 10rem;" />
+  </div>
+{:else if error}
+  <h1>{error}</h1>
+{:else}
 <h1 class="display-01">Websites</h1>
 
 <Link to="websitecreate"><button class="btn btn-primary" type="button"> Upload (New Page)</button></Link>
@@ -32,8 +51,9 @@
       <tr>
         <td>{website.name}</td>
         <td>{website.url}</td>
-        <td><button class="btn btn-danger">Delete</button></td>
+        <td><button class="btn btn-danger" on:click={() => remove(website.id)}>Delete</button></td>
       </tr>
     {/each}
   </tbody>
 </table>
+{/if}
