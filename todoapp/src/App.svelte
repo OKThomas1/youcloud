@@ -48,14 +48,6 @@
     color: black;
   }
 
-  header {
-    width: 100%;
-    max-width: 36em;
-    margin: 0 auto;
-    padding: 5em 0;
-    text-align: left;
-  }
-
   /* :global(body) {
     background-color: #555555;
   } */
