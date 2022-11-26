@@ -1,11 +1,11 @@
 <script>
-  import { Link } from "svelte-routing"
+import { Link } from "svelte-routing"
 
 let loading = true
 let error=  null
+let scripts = [{name: "testscript", status:"running", id:1 }]
 try {
 //let scripts = await axios.get("/api/nodejs")
-let scripts = [{name: "testscript", status:"running", id:1 }]
 }
 catch(err){
 
@@ -17,8 +17,12 @@ const submit = (event)  =>{
 //     axios.delete(`/api/nodejs/{id}`)
 // }
 </script>
+
+<h1 class="display-01">Node JS</h1>
+
 <Link to="nodecreate"><button class="btn btn-primary" type="button"> Upload (New Page)</button></Link>
-<table class="table table-bordered">
+
+<table class="table table-hover">
   <thead>
     <tr>
       <th>Name</th>
@@ -27,20 +31,12 @@ const submit = (event)  =>{
     </tr>
   </thead>
   <tbody>
-    <tr>
-      <td>John</td>
-      <td>Doe</td>
-      <td>john@example.com</td>
-    </tr>
-    <tr>
-      <td>Mary</td>
-      <td>Moe</td>
-      <td>mary@example.com</td>
-    </tr>
-    <tr>
-      <td>July</td>
-      <td>Dooley</td>
-      <td>july@example.com</td>
-    </tr>
+    {#each scripts as script}
+      <tr>
+        <td>{script.name}</td>
+        <td>{script.status}</td>
+        <td><button class="btn btn-danger">Delete</button></td>
+      </tr>
+    {/each}
   </tbody>
 </table>
