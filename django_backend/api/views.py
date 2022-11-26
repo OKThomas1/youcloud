@@ -45,6 +45,8 @@ class NodeView(APIView):
 			system(f"pm2 start index.js")
 			chdir(cwd)
 			NodeScript.objects.create(user=request.user, folder=path, name=request.data['name'])
+			request.user.profile.nodejsAvailable -= 1
+			request.user.profile.save()
 			return Response({"success": "Successfully uploaded nodejs script"}, status=status.HTTP_200_OK)
 		except Exception as e:
 			print(e)
@@ -80,6 +82,8 @@ class NodeDetailView(APIView):
 				system(f'pm2 delete {script.folder}/index.js')
 				rmtree(script.folder)
 				script.delete()
+				request.user.profile.nodejsAvailable += 1
+				request.user.profile.save()
 				return Response({"success": "Successfully deleted nodejs script"}, status=status.HTTP_200_OK)
 			except Exception as e:
 				print(e)
@@ -110,6 +114,8 @@ class MySQLView(APIView):
 			cursor.execute("flush privileges")
 			cnx.close()
 			MySQLDatabase.objects.create(name=database, username=username, password=password, user=request.user)
+			request.user.profile.mysqlAvailable -= 1
+			request.user.profile.save()
 			return Response({"success": "Successfully created mysql database"}, status=status.HTTP_200_OK)
 		except Exception as e:
 			print(e)
@@ -152,6 +158,9 @@ class MySQLDetailView(APIView):
 				cursor.execute(f"drop database if exists {database.name}")
 				cursor.execute(f"drop user if exists '{database.username}'@'%'")
 				cnx.close()
+				database.delete()
+				request.user.profile.mysqlAvailable += 1
+				request.user.profile.save()
 				return Response({"success": "Successfully deleted mysql database"}, status=status.HTTP_200_OK)
 			except Exception as e:
 				print(e)
@@ -202,6 +211,8 @@ class WebsiteView(APIView):
 				file.write(CONF_TEMPLATE)
 			system("sudo service apache2 reload")
 			Website.objects.create(user=request.user, name=name, url=f"{name}.{env('DOMAIN')}", folder=path)
+			request.user.profile.websitesAvailable -= 1
+			request.user.profile.save()
 			return Response({"success": "Successfully uploaded website"}, status=status.HTTP_200_OK)
 		except Exception as e:
 			print(e)
@@ -217,6 +228,8 @@ class WebsiteDetailView(APIView):
 			rmtree(website.folder)
 			system("sudo service apache2 reload")
 			website.delete()
+			request.user.profile.websitesAvailable += 1
+			request.user.profile.save()
 			return Response({"success": "Successfully deleted website"}, status=status.HTTP_200_OK)
 
 		return Response({"error": "Could not get database"}, status=status.HTTP_400_BAD_REQUEST)
