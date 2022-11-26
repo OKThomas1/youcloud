@@ -2,6 +2,6 @@
     export let Todo = [];
 </script>
 
-{#each Todo as todo (todo.id)}
-    <h1>{todo.text}</h1>
+{#each Todo as td (td.id)}
+    <h1>{td.todo}</h1>
 {/each}
