@@ -4,7 +4,9 @@
   import Nodejs from "./pages/Node.svelte"
   import NodeCreate from "./pages/NodeCreate.svelte"
   import mySQL from "./pages/mySQL.svelte"
+  import mySQLCreate from "./pages/mySQLCreate.svelte"
   import Website from "./pages/Website.svelte"
+  import WebsiteCreate from "./pages/WebsiteCreate.svelte"
 
   import logo from "./assets/logo.png"
 	import axios from "axios"
@@ -30,7 +32,9 @@
     <Route path="nodejs" component={Nodejs} />
     <Route path="nodecreate" component={NodeCreate} />
     <Route path="mysql" component={mySQL} />
+    <Route path="mysqlcreate" component={mySQLCreate} />
     <Route path="website" component={Website} />
+    <Route path="websitecreate" component={WebsiteCreate} />
     <Route path="/"><Home /></Route>
   </div>
 

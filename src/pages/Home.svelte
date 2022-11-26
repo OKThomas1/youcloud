@@ -37,7 +37,7 @@
       </Link>
     </div>
     <div class="col-md-4">
-       <Link to="nodejs">
+       <Link to="mysql">
         <div class="m-4 card">
           <div class="card-header">
             <h2 class="h2 card-title">mySQL</h2>
@@ -46,7 +46,7 @@
       </Link>
     </div>
     <div class="col-md-4">
-       <Link to="nodejs">
+       <Link to="website">
         <div class="m-4 card">
           <div class="card-header">
             <h2 class="h2 card-title">Website</h2>

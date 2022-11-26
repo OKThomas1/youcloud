@@ -25,6 +25,5 @@
     <input type="text" name="name" id="name">
     <input type="file" name="file">
     <button class="btn btn-primary" type="submit">Upload</button>
-  
   </form>
- 
+
