@@ -20,7 +20,7 @@
 
 
 <Router {url}>
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light mb-5">
     <div class="container-fluid">
       <Link to="/"><img src="https://cdn.discordapp.com/attachments/1041569265813291048/1045169599433416744/logocroppped.png" alt="youCloud" /></Link>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
@@ -29,7 +29,7 @@
     </div>
   </nav>
       
-  <div class="container">
+  <div class="container text-center">
     <Route path="nodejs" component={Nodejs} />
     <Route path="nodecreate" component={NodeCreate} />
     <Route path="mysql" component={mySQL} />
