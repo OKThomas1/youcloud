@@ -89,9 +89,10 @@ class WebsiteView(APIView):
 
 class NodeDetailView(APIView):
 	def delete(self, request, pk, format=None):
-		script = NodeScript.objects.filter(pk=pk)
-		if len(script) == 1 and script.user == request.user:
+		script = NodeScript.objects.filter(pk=pk, user=request.user)
+		if len(script) == 1:
 			try:
+				script = script[0]
 				system(f'pm2 delete {script.folder}/index.js')
 				script.delete()
 				return Response({"success": "Successfully deleted nodejs script"}, status=status.HTTP_200_OK)
@@ -103,7 +104,11 @@ class NodeDetailView(APIView):
 
 class MySQLDetailView(APIView):
 	def get(self, request, pk, format=None):
-		return 
+		database = MySQLDatabase.objects.filter(pk=pk, user=request.user)
+		if len(database) == 1:
+			database = database[0]
+			return Response(MySQLDatabaseSerializer(database).data, status=status.HTTP_200_OK)
+		return Response({"error": "Could not get database"}, status=status.HTTP_400_BAD_REQUEST)
 
 	def post(self, request, pk, format=None):
 		return
