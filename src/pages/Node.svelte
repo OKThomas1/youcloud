@@ -54,7 +54,7 @@
     <div class="container text-center bg-secondary">
       <h2>No Scripts Found</h2>
       <p>Please click <strong>Upload</strong> to add a Script</p>
-      <p>You have <strong>{available}</strong> {available == 1 ? "script" : "scriptss"} available</p>
+      <p>You have <strong>{available}</strong> {available == 1 ? "script" : "scripts"} available</p>
     </div>
   {:else}
     <table class="table table-hover">
