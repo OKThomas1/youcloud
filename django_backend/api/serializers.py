@@ -8,7 +8,7 @@ class UserSerializer(ModelSerializer):
 	username = CharField(source="user.username")
 	class Meta:
 		model = Profile
-		fields = ('nodejsAvailable', 'mysqlAvailable', 'websitesAvailable')
+		fields = ('nodejsAvailable', 'mysqlAvailable', 'websitesAvailable', 'username')
 
 
 class NodeScriptSerializer(ModelSerializer):
@@ -20,7 +20,7 @@ class NodeScriptSerializer(ModelSerializer):
 class MySQLDatabaseSerializer(ModelSerializer):
 	class Meta:
 		model = MySQLDatabase
-		fields = '__all__'
+		fields = ['name','username','id']
 
 
 class WebsiteSerializer(ModelSerializer):
