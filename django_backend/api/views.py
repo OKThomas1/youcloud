@@ -101,7 +101,7 @@ class MySQLView(APIView):
 		database = request.data['name']
 		username = request.data['username']
 		password = request.data['password']
-		cnx = mysql.connector.connect(user='root', host='127.0.0.1')	
+		cnx = mysql.connector.connect(user='root', host='127.0.0.1', password=env('MYSQLPASSWORD'))	
 		try:
 			cursor = cnx.cursor()
 			cursor.execute(f"create database {database}")
