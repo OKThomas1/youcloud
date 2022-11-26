@@ -4,4 +4,8 @@ const app = express()
 
 app.get("/", (req, res) => {})
 
+app.post("/", (req, res) => {})
+
+app.delete("/:id", (req, res) => {})
+
 app.listen(3001, () => console.log("server is running on port 3001"))

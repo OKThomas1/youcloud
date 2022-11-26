@@ -1,35 +1,32 @@
 <script>
-  import Counter from './lib/Counter.svelte'
+  import {Router, Link, Route} from "svelte-routing"
+  import Home from "./pages/Home.svelte"
+  import Nodejs from "./pages/Node.svelte"
+  import mySQL from "./pages/mySQL.svelte"
+  import Website from "./pages/Website.svelte"
 
-  function test(){
-     console.log("test")
+  import logo from "./assets/logo.png"
 
-  }
+  export let url = ""
+
 </script>
 
-<style>
-</style>
 
-<main class="flex flex-col h-screen w-full justify-center items-center bg-yellow-100">
-
-    <div class="">
-      <spa class="font-light font-sans h-32 w-full items-center text-center text-5xl lg:text-8xl mt-12 text-blue-700">
-           Hello World!!
-      </spa>
-
+<Router {url}>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+      <Link to="/"><img src="https://cdn.discordapp.com/attachments/1041569265813291048/1045169599433416744/logocroppped.png" alt="youCloud" /></Link>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon" />
+      </button>
     </div>
+  </nav>
+      
+  <div class="container">
+    <Route path="nodejs" component={Nodejs} />
+    <Route path="mysql" component={mySQL} />
+    <Route path="website" component={Website} />
+    <Route path="/"><Home /></Route>
+  </div>
 
-   <div class="mt-20">
-    <Counter />
-   </div>
-
-
-
-    <div class="container mx-auto pt-32 px-6 z-10 flex items-center justify-between">
-        <div class="container mx-auto px-6 flex flex-col-reverse lg:flex-row justify-between items-center relative">
-            <div class="w-full mb-16 md:mb-8 text-center">
-
-            </div>
-        </div>
-    </div>
-</main>
+</Router>
