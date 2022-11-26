@@ -7,6 +7,9 @@
   import Website from "./pages/Website.svelte"
 
   import logo from "./assets/logo.png"
+	import axios from "axios"
+
+	axios.defaults.baseURL = "http://localhost:8000"
 
   export let url = ""
 

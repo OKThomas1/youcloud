@@ -8,7 +8,7 @@ from users.models import NodeScript, MySQLDatabase, Website
 from django.core.files.storage import FileSystemStorage
 from zipfile import ZipFile
 from random import randint
-from os import system
+from os import system, getcwd, chdir
 import mysql.connector
 
 # Create your views here.
@@ -25,15 +25,20 @@ class NodeView(APIView):
 		return Response(data, status=status.HTTP_200_OK)
 
 	def post(self, request, format=None):
+		print(request.data)
 		try:
 			zip = request.data['file']
 			path = f'{request.user.username}/nodejs/{randint(0,100000)}/'
 			fs = FileSystemStorage(location=path)
 			fs.save("unzip.zip", request.data['file'])
-			with ZipFile(f'{path}/unzip.zip', zip):
+			with ZipFile(f'{path}/unzip.zip', 'r') as zip:
 				zip.extractall(path)
-			system(f"pm2 start {path}/index.js")
-			NodeScript.objects.create(user=request.user, folder=path)
+			cwd = getcwd()
+			chdir(path)
+			system(f"npm install")
+			system(f"pm2 start index.js")
+			chdir(cwd)
+			NodeScript.objects.create(user=request.user, folder=path, name=request.data['name'])
 		except Exception as e:
 			print(e)
 			return Response({"error": "Could not receive nodejs script"}, status=status.HTTP_400_BAD_REQUEST)
@@ -122,9 +127,11 @@ class WebsiteDetailView(APIView):
 
 class GetSelfView(APIView):
   def get(self, request):
+    print(request.user.profile)
     try:
       profile = request.user.profile
       data = UserSerializer(profile).data
       return Response({"user":data}, status=status.HTTP_200_OK)
-    except:
+    except Exception as e:
+      print(e)
       return Response({"error": "error getting profile"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)

@@ -1,17 +1,19 @@
 <script>
   import {Router, Link, Route} from "svelte-routing"
-
+	import axios from "axios"
+	import Cookies from "js-cookie"
   let loading = true
   let error = null
   let user = null
-  try {
-    //const user = await axios.get("/api/user")
-    user = {username: "Thomas", nodejsleft: 1, mysqlleft: 1, webstiesleft: 1}
-    loading = false
-  } catch (err) {
-    error = "could not get data"
-    loading = false
-  }
+  axios.get("/api/self", {headers: {"X-CSRFTOKEN": Cookies.get("csrftoken")}}).then(res => {
+		user = res.data.user
+		loading = false
+	}).catch(err => {
+		console.error(err)
+		error = "Could not get user"
+		loading = false
+	})
+
 </script>
 
 {#if loading}

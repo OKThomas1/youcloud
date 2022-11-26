@@ -15,6 +15,7 @@ class NodeScript(models.Model):
 	folder = models.CharField(max_length=1000)
 	status = models.CharField(max_length=50, default="running")
 	user = models.ForeignKey(User, on_delete=models.CASCADE)
+	name = models.CharField(max_length=50)
 
 
 class MySQLDatabase(models.Model):
