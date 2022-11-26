@@ -1,15 +1,22 @@
 <script>
-import { Link } from "svelte-routing"
+import {Router, Link, Route} from "svelte-routing"
+	import axios from "axios"
+	import Cookies from "js-cookie"
+  let loading = true
+  let error = null
+  let user = null
+  
+  let databases = [{name: "testdb", username:"testusername", password:"huh?", id:1 }]
+  
+  axios.get("/api/self", {headers: {"X-CSRFTOKEN": Cookies.get("csrftoken")}}).then(res => {
+		user = res.data.user
+		loading = false
+	}).catch(err => {
+		console.error(err)
+		error = "Could not get user"
+		loading = false
+	})
 
-let loading = true
-let error=  null
-let databases = [{name: "testdb", username:"testusername", password:"huh?", id:1 }]
-try {
-//let databasees = await axios.get("/api/mysql")
-}
-catch(err){
-
-}
 const submit = (event)  =>{
 
 }
@@ -26,14 +33,16 @@ const submit = (event)  =>{
   <thead>
     <tr>
       <th>Database Name</th>
-      <th>username</th>
+      <th>Username</th>
       <th>Remove</th>
     </tr>
   </thead>
   <tbody>
     {#each databases as db}
       <tr>
-        <td>{db.name}</td>
+        <Link to={`mysql/${db.id}`}>
+          <td>{db.name}</td>
+        </Link>
         <td>{db.username}</td>
         <td><button class="btn btn-danger">Delete</button></td>
       </tr>

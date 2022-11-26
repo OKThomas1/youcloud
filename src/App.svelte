@@ -10,6 +10,7 @@
 
   import logo from "./assets/logo.png"
 	import axios from "axios"
+  import MySqlItem from "./pages/mySQLItem.svelte"
 
 	axios.defaults.baseURL = "http://localhost:8000"
 
@@ -33,6 +34,7 @@
     <Route path="nodecreate" component={NodeCreate} />
     <Route path="mysql" component={mySQL} />
     <Route path="mysqlcreate" component={mySQLCreate} />
+    <Route path="mysql/:id" component={MySqlItem} />
     <Route path="website" component={Website} />
     <Route path="websitecreate" component={WebsiteCreate} />
     <Route path="/"><Home /></Route>
