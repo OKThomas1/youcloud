@@ -19,6 +19,15 @@
 
   const deleteTask = (e) => {
     const taskId = e.detail;
+    
+    axios.delete('http://localhost:3001/' + taskId + '/').then((res) => {
+      console.log("Deleted", res)
+    }).catch((err) => {
+      console.error(err)
+    })
+
+    items = items.filter((task) => task.id != taskId)
+
   };
 </script>
 
