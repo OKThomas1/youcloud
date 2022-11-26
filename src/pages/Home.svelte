@@ -23,33 +23,38 @@
 {:else if error}
   <h1>{error}</h1>
 {:else}
-  <div class="container d-flex justify-content-center">
-    <p class="display-2">Hello {user.username}</p>
-  </div>
-  <div class="row bg-primary">
+    <p class="display-2" style="height:20rem;">Hello {user.username}</p>
+
+  <div class="row bg-dark">
     <div class="col-md-4">
        <Link to="nodejs">
-        <div class="m-4 card">
-          <div class="card-header">
-            <h2 class="h2 card-title">Node</h2>
+        <div class="card border-primary mb-3">
+          <div class="card-header">Icon</div>
+          <div class="card-body">
+            <h4 class="card-title">Node</h4>
+            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
           </div>
         </div>
       </Link>
     </div>
     <div class="col-md-4">
        <Link to="mysql">
-        <div class="m-4 card">
-          <div class="card-header">
-            <h2 class="h2 card-title">mySQL</h2>
+        <div class="card border-primary mb-3">
+          <div class="card-header">Icon</div>
+          <div class="card-body">
+            <h4 class="card-title">MySQL</h4>
+            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
           </div>
         </div>
       </Link>
     </div>
     <div class="col-md-4">
        <Link to="website">
-        <div class="m-4 card">
-          <div class="card-header">
-            <h2 class="h2 card-title">Website</h2>
+        <div class="card border-primary mb-3">
+          <div class="card-header">Icon</div>
+          <div class="card-body">
+            <h4 class="card-title">Website</h4>
+            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
           </div>
         </div>
       </Link>
