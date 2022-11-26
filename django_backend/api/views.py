@@ -17,8 +17,6 @@ import environ
 env = environ.Env()
 environ.Env.read_env()
 
-
-
 # Create your views here.
 
 class NodeView(APIView):
@@ -54,6 +52,26 @@ class NodeView(APIView):
 
 
 class NodeDetailView(APIView):
+
+	def patch(self, request, pk, format=None):
+		script = NodeScript.objects.filter(pk=pk, user=request.user)
+		if len(script) == 1:
+			try:
+				script = script[0]
+				if script.status == "running":
+					script.status = "stopped"
+					system(f'pm2 stop {script.folder}/index.js')
+				else:
+					script.status = "running"
+					system(f'pm2 start {script.folder}/index.js')
+				script.save()
+				return Response({"success": "Successfully updated nodejs script", "status": script.status}, status=status.HTTP_200_OK)
+			except Exception as e:
+				print(e)
+				return Response({"error": "Error updating nodejs script"}, status=status.HTTP_400_BAD_REQUEST)
+		else:
+			return Response({"error": "Could not get script"}, status=status.HTTP_400_BAD_REQUEST)
+
 	def delete(self, request, pk, format=None):
 		script = NodeScript.objects.filter(pk=pk, user=request.user)
 		if len(script) == 1:

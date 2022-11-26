@@ -14,7 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.urls import path, include
 from django.contrib.auth import views as auth_views
 from django.views.generic import View
@@ -25,10 +25,11 @@ class BaseView(LoginRequiredMixin, View):
 	login_url = '/login/'
 	redirect_field_name = '/'
 	def get(self, request):
+		if request.user.is_staff:
+			return redirect("/admin/")
 		return render(request, '../templates/index.html')
 
 urlpatterns = [
-
   path('admin/', admin.site.urls),
 	path('api/', include('api.urls')),
 	path('login/', auth_views.LoginView.as_view(template_name="users/login.html"), name="login"),

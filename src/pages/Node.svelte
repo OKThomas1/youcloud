@@ -23,7 +23,17 @@
 			scripts = scripts.filter(s => s.id !== id)
 		}).catch(err => {
 			console.error(err)
-			error = "Could not get nodejs scripts"
+			error = "Could not delete nodejs scripts"
+		})
+	}
+
+	const patch = (id) => {
+		axios.patch(`/api/node/${id}`, {}, {headers: {"X-CSRFTOKEN": Cookies.get("csrftoken")}}).then(res => {
+			scripts.find(e => e.id === id).status = res.data.status
+			scripts = [...scripts]
+		}).catch(err => {
+			console.error(err)
+			error = "Could not patch nodejs scripts"
 		})
 	}
 
@@ -46,6 +56,7 @@
     <tr>
       <th>Name</th>
       <th>Status</th>
+			<th>Update</th>
       <th>Remove</th>
     </tr>
   </thead>
@@ -54,6 +65,7 @@
       <tr>
         <td>{script.name}</td>
         <td>{script.status}</td>
+				<td><button on:click={() => patch(script.id)} class="btn btn-{script.status === 'running' ? 'warning' : 'success'}">{script.status === "running" ? "Stop" : "Start"}</button></td>
         <td><button class="btn btn-danger" on:click={() => remove(script.id)}>Delete</button></td>
       </tr>
     {/each}

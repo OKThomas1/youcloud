@@ -7,8 +7,6 @@
   import mySQLCreate from "./pages/mySQLCreate.svelte"
   import Website from "./pages/Website.svelte"
   import WebsiteCreate from "./pages/WebsiteCreate.svelte"
-
-  import logo from "./assets/logo.png"
 	import axios from "axios"
   import MySqlItem from "./pages/mySQLItem.svelte"
 
@@ -21,11 +19,9 @@
 
 <Router {url}>
   <nav class="navbar navbar-expand-lg navbar-light bg-light mb-5">
-    <div class="container-fluid">
+    <div class="container">
       <Link to="/"><img src="https://cdn.discordapp.com/attachments/1041569265813291048/1045169599433416744/logocroppped.png" alt="youCloud" /></Link>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon" />
-      </button>
+			<a href="/logout" class="navbar-brand">Logout</a>
     </div>
   </nav>
       
