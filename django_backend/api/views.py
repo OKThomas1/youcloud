@@ -146,7 +146,7 @@ class MySQLDetailView(APIView):
 		database = MySQLDatabase.objects.filter(pk=pk, user=request.user)
 		if len(database) == 1:
 			database = database[0]
-			cnx = mysql.connector.connect(user="root", host="127.0.0.1")	
+			cnx = mysql.connector.connect(user="root", host="127.0.0.1", password=env('MYSQLPASSWORD'))	
 			try:
 				cursor = cnx.cursor()
 				cursor.execute(f"drop database if exists {database.name}")
