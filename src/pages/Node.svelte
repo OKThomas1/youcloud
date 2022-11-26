@@ -1,26 +1,43 @@
 <script>
-import { Link } from "svelte-routing"
+  import axios from "axios"
+	import { Link } from "svelte-routing"
+	import Cookies from "js-cookie"
+	let loading = true
+	let error = null
+	let scripts
 
-let loading = true
-let error=  null
-let scripts = [{name: "testscript", status:"running", id:1 }]
-try {
-//let scripts = await axios.get("/api/nodejs")
-}
-catch(err){
+	axios.get("/api/node", {headers: {"X-CSRFTOKEN": Cookies.get("csrftoken")}}).then(res => {
+		console.log(res.data)
+		scripts = res.data 
+		loading = false
+	}).catch(err => {
+		console.error(err)
+		error = "Could not get nodejs scripts"
+		loading = false
+	})
 
-}
-const submit = (event)  =>{
+	const remove = (id)  =>{
+		axios.delete(`/api/node/${id}`, {headers: {"X-CSRFTOKEN": Cookies.get("csrftoken")}}).then(res => {
+			scripts = scripts.filter(s => s.id !== id)
+		}).catch(err => {
+			console.error(err)
+			error = "Could not get nodejs scripts"
+		})
+	}
 
-}
-// const delete = (id) => {
-//     axios.delete(`/api/nodejs/{id}`)
-// }
 </script>
 
+
+{#if loading}
+  <div class="d-flex justify-content-center align-items-center">
+    <div class="my-5 spinner-border text-primary" style="width: 10rem; height: 10rem;" />
+  </div>
+{:else if error}
+  <h1>{error}</h1>
+{:else}
 <h1 class="display-01">Node JS</h1>
 
-<Link to="nodecreate"><button class="btn btn-primary" type="button"> Upload (New Page)</button></Link>
+<Link to="nodecreate"><button class="btn btn-primary" type="button">Upload (New Page)</button></Link>
 
 <table class="table table-hover">
   <thead>
@@ -35,8 +52,9 @@ const submit = (event)  =>{
       <tr>
         <td>{script.name}</td>
         <td>{script.status}</td>
-        <td><button class="btn btn-danger">Delete</button></td>
+        <td><button class="btn btn-danger" on:click={() => remove(script.id)}>Delete</button></td>
       </tr>
     {/each}
   </tbody>
 </table>
+{/if}

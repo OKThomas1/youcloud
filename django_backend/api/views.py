@@ -10,6 +10,7 @@ from zipfile import ZipFile
 from random import randint
 from os import system, getcwd, chdir
 import mysql.connector
+from shutil import rmtree
 
 # Create your views here.
 
@@ -99,6 +100,7 @@ class NodeDetailView(APIView):
 			try:
 				script = script[0]
 				system(f'pm2 delete {script.folder}/index.js')
+				rmtree(script.folder)
 				script.delete()
 				return Response({"success": "Successfully deleted nodejs script"}, status=status.HTTP_200_OK)
 			except Exception as e:
