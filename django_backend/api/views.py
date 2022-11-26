@@ -10,6 +10,7 @@ from zipfile import ZipFile
 from random import randint
 from os import system, getcwd, chdir
 import mysql.connector
+from shutil import rmtree
 
 # Create your views here.
 
@@ -45,10 +46,24 @@ class NodeView(APIView):
 		return Response({"success": "Successfully uploaded nodejs script"}, status=status.HTTP_200_OK)
 
 
+class NodeDetailView(APIView):
+	def delete(self, request, pk, format=None):
+		script = NodeScript.objects.filter(pk=pk, user=request.user)
+		if len(script) == 1:
+			try:
+				script = script[0]
+				system(f'pm2 delete {script.folder}/index.js')
+				rmtree(script.folder)
+				script.delete()
+				return Response({"success": "Successfully deleted nodejs script"}, status=status.HTTP_200_OK)
+			except Exception as e:
+				print(e)
+				return Response({"error": "Error removing nodejs script"}, status=status.HTTP_400_BAD_REQUEST)
+		else:
+			return Response({"error": "Could not get script"}, status=status.HTTP_400_BAD_REQUEST)
+
 
 class MySQLView(APIView):
-
-	parser_classes = [FormParser, MultiPartParser]
 
 	def get(self, request, format=None):
 		databases = MySQLDatabase.objects.filter(user=request.user)
@@ -58,7 +73,7 @@ class MySQLView(APIView):
 		return Response(data, status=status.HTTP_200_OK)
 
 	def post(self, request, format=None):
-		database = request.data['database']
+		database = request.data['name']
 		username = request.data['username']
 		password = request.data['password']
 		cnx = mysql.connector.connect(user='root', host='127.0.0.1')	
@@ -77,6 +92,49 @@ class MySQLView(APIView):
 			return Response({"error": "Error creating mysql database"}, status=status.HTTP_400_BAD_REQUEST)
 
 
+class MySQLDetailView(APIView):
+	def get(self, request, pk, format=None):
+		database = MySQLDatabase.objects.filter(pk=pk, user=request.user)
+		if len(database) == 1:
+			database = database[0]
+			return Response(MySQLDatabaseSerializer(database).data, status=status.HTTP_200_OK)
+		return Response({"error": "Could not get database"}, status=status.HTTP_400_BAD_REQUEST)
+
+	def post(self, request, pk, format=None):
+		database = MySQLDatabase.objects.filter(pk=pk, user=request.user)
+		if len(database) == 1:
+			database = database[0]
+			cnx = mysql.connector.connect(user=database.username, database=database.name, password=database.password, host="127.0.0.1")	
+			try:
+				cursor = cnx.cursor()
+				cursor.execute(request.data['query'])
+				cnx.close()
+				return Response({"success": "Successfully created mysql database"}, status=status.HTTP_200_OK)
+			except Exception as e:
+				print(e)
+				cnx.close()
+				return Response({"error": "Error creating mysql database"}, status=status.HTTP_400_BAD_REQUEST)
+
+		return Response({"error": "Could not get database"}, status=status.HTTP_400_BAD_REQUEST)
+
+	def delete(self, request, pk, format=None):
+		database = MySQLDatabase.objects.filter(pk=pk, user=request.user)
+		if len(database) == 1:
+			database = database[0]
+			cnx = mysql.connector.connect(user="root", host="127.0.0.1")	
+			try:
+				cursor = cnx.cursor()
+				cursor.execute(f"drop database if exists {database.name}")
+				cursor.execute(f"drop user if exists '{database.username}'@'%'")
+				cnx.close()
+				return Response({"success": "Successfully deleted mysql database"}, status=status.HTTP_200_OK)
+			except Exception as e:
+				print(e)
+				cnx.close()
+				return Response({"error": "Error deleting mysql database"}, status=status.HTTP_400_BAD_REQUEST)
+
+		return Response({"error": "Could not get database"}, status=status.HTTP_400_BAD_REQUEST)
+
 
 class WebsiteView(APIView):
 
@@ -92,38 +150,11 @@ class WebsiteView(APIView):
 	def post(self, request, format=None):
 		return 
 
-class NodeDetailView(APIView):
-	def delete(self, request, pk, format=None):
-		script = NodeScript.objects.filter(pk=pk, user=request.user)
-		if len(script) == 1:
-			try:
-				script = script[0]
-				system(f'pm2 delete {script.folder}/index.js')
-				script.delete()
-				return Response({"success": "Successfully deleted nodejs script"}, status=status.HTTP_200_OK)
-			except Exception as e:
-				print(e)
-				return Response({"error": "Error removing nodejs script"}, status=status.HTTP_400_BAD_REQUEST)
-		else:
-			return Response({"error": "Could not get script"}, status=status.HTTP_400_BAD_REQUEST)
-
-class MySQLDetailView(APIView):
-	def get(self, request, pk, format=None):
-		database = MySQLDatabase.objects.filter(pk=pk, user=request.user)
-		if len(database) == 1:
-			database = database[0]
-			return Response(MySQLDatabaseSerializer(database).data, status=status.HTTP_200_OK)
-		return Response({"error": "Could not get database"}, status=status.HTTP_400_BAD_REQUEST)
-
-	def post(self, request, pk, format=None):
-		return
-
-	def delete(self, request, pk, format=None):
-		return
-
+		
 class WebsiteDetailView(APIView):
 	def delete(self, request, pk, format=None):
 		return
+
 
 class GetSelfView(APIView):
   def get(self, request):
