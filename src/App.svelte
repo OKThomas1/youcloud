@@ -2,6 +2,7 @@
   import {Router, Link, Route} from "svelte-routing"
   import Home from "./pages/Home.svelte"
   import Nodejs from "./pages/Node.svelte"
+  import NodeCreate from "./pages/NodeCreate.svelte"
   import mySQL from "./pages/mySQL.svelte"
   import Website from "./pages/Website.svelte"
 
@@ -24,8 +25,9 @@
       
   <div class="container">
     <Route path="nodejs" component={Nodejs} />
-    <Route path="/mysql" component={mySQL} />
-    <Route path="/website" component={Website} />
+    <Route path="nodecreate" component={NodeCreate} />
+    <Route path="mysql" component={mySQL} />
+    <Route path="website" component={Website} />
     <Route path="/"><Home /></Route>
   </div>
 

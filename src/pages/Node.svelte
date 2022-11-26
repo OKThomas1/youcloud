@@ -20,7 +20,7 @@ const submit = (event)  =>{
   <button class="btn btn-primary" type="submit">Upload</button>
 
 </form>
-
+<button class="btn btn-primary" type="button"> Upload (New Page)</button>
 <table class="table table-bordered">
   <thead>
     <tr>
