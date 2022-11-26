@@ -16,7 +16,7 @@
 	})
 
 	const remove = (id) => {
-		axios.delete(`/api/mysql/${id}`).then(res => {
+		axios.delete(`/api/mysql/${id}`,  {headers: {"X-CSRFTOKEN": Cookies.get("csrftoken")}}).then(res => {
 			console.log(res.data)
 			databases = databases.filter(db => db.id !== id)
 		}).catch(err => {

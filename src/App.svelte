@@ -34,7 +34,7 @@
     <Route path="nodecreate" component={NodeCreate} />
     <Route path="mysql" component={mySQL} />
     <Route path="mysqlcreate" component={mySQLCreate} />
-    <Route path="mysql/:id" component={MySqlItem} let:params />
+    <Route path="mysql/:id" let:params><MySqlItem id="{params.id}"/> </Route>
     <Route path="website" component={Website} />
     <Route path="websitecreate" component={WebsiteCreate} />
     <Route path="/"><Home /></Route>
