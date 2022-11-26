@@ -1,4 +1,5 @@
-from .serializers import NodeScriptSerializer, UserSerializer
+from typing import final
+from .serializers import MySQLDatabaseSerializer, NodeScriptSerializer, UserSerializer, WebsiteSerializer
 from rest_framework.views import APIView
 from rest_framework.parsers import FormParser, MultiPartParser
 from rest_framework.response import Response
@@ -8,6 +9,8 @@ from django.core.files.storage import FileSystemStorage
 from zipfile import ZipFile
 from random import randint
 from os import system
+import mysql.connector
+
 # Create your views here.
 
 class NodeView(APIView):
@@ -39,18 +42,47 @@ class NodeView(APIView):
 
 
 class MySQLView(APIView):
+
 	parser_classes = [FormParser, MultiPartParser]
+
 	def get(self, request, format=None):
-		return 
+		databases = MySQLDatabase.objects.filter(user=request.user)
+		data = []
+		for database in databases:
+			data.append(MySQLDatabaseSerializer(database).data)
+		return Response(data, status=status.HTTP_200_OK)
 
 	def post(self, request, format=None):
-		return 
+		database = request.data['database']
+		username = request.data['username']
+		password = request.data['password']
+		cnx = mysql.connector.connect(user='root', host='127.0.0.1')	
+		try:
+			cursor = cnx.cursor()
+			cursor.execute(f"create database {database}")
+			cursor.execute(f"create user '{username}'@'%' identified by '{password}'")
+			cursor.execute(f"grant all privileges on {database}.* to '{username}'@'%'")
+			cursor.execute("flush privileges")
+			cnx.close()
+			MySQLDatabase.objects.create(name=database, username=username, password=password, user=request.user)
+			return Response({"success": "Successfully created mysql database"}, status=status.HTTP_200_OK)
+		except Exception as e:
+			print(e)
+			cnx.close()
+			return Response({"error": "Error creating mysql database"}, status=status.HTTP_400_BAD_REQUEST)
+
 
 
 class WebsiteView(APIView):
+
 	parser_classes = [FormParser, MultiPartParser]
+
 	def get(self, request, format=None):
-		return 
+		websites = Website.objects.filter(user=request.user)
+		data = []
+		for website in websites:
+			data.append(WebsiteSerializer(website).data)
+		return Response(data, status=status.HTTP_200_OK)
 
 	def post(self, request, format=None):
 		return 
@@ -58,7 +90,7 @@ class WebsiteView(APIView):
 class NodeDetailView(APIView):
 	def delete(self, request, pk, format=None):
 		script = NodeScript.objects.filter(pk=pk)
-		if len(script) == 1:
+		if len(script) == 1 and script.user == request.user:
 			try:
 				system(f'pm2 delete {script.folder}/index.js')
 				script.delete()
@@ -72,6 +104,9 @@ class NodeDetailView(APIView):
 class MySQLDetailView(APIView):
 	def get(self, request, pk, format=None):
 		return 
+
+	def post(self, request, pk, format=None):
+		return
 
 	def delete(self, request, pk, format=None):
 		return

@@ -14,14 +14,12 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.http import HttpResponse
-from django.shortcuts import redirect, render
+from django.shortcuts import render
 from django.urls import path, include
-from django.views.generic import TemplateView
 from django.contrib.auth import views as auth_views
 from django.views.generic import View
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.template import loader
+from django.urls import re_path
 
 class BaseView(LoginRequiredMixin, View):
 	login_url = '/login/'
@@ -31,9 +29,9 @@ class BaseView(LoginRequiredMixin, View):
 
 urlpatterns = [
 
-  path("", BaseView.as_view(), name='base'),
   path('admin/', admin.site.urls),
 	path('api/', include('api.urls')),
 	path('login/', auth_views.LoginView.as_view(template_name="users/login.html"), name="login"),
   path('logout/', auth_views.LogoutView.as_view(), name="logout"),
+  re_path(r"^.*", BaseView.as_view(), name='base'),
 ]
