@@ -5,6 +5,7 @@
 	let error = null
 	let loading = false
   const submit = (event)  =>{
+		error = null
 		loading = true
 		event.preventDefault()
 		let {file, name} = event.target.elements

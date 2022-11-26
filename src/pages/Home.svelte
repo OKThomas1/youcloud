@@ -23,7 +23,7 @@
 {:else if error}
   <h1>{error}</h1>
 {:else}
-  <div class="container mt-5 d-flex justify-content-center">
+  <div class="container d-flex justify-content-center">
     <p class="display-2">Hello {user.username}</p>
   </div>
   <div class="row bg-primary">

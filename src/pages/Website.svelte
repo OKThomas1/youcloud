@@ -6,10 +6,12 @@
   let loading = true
   let error = null
   let websites = []
+  let available
 
 	axios.get("/api/websites", {headers: {"X-CSRFTOKEN": Cookies.get("csrftoken")}}).then(res => {
 		console.log(res.data)
-		websites = res.data 
+		websites = res.data.websites
+    available = res.data.available
 		loading = false
 	}).catch(err => {
 		console.error(err)

@@ -2,12 +2,15 @@
 	import {Router, Link, Route} from "svelte-routing"
 	import axios from "axios"
 	import Cookies from "js-cookie"
+  import { detach_before_dev } from "svelte/internal"
   let loading = true
   let error = null
   let databases = null
+  let available
   
   axios.get("/api/mysql", {headers: {"X-CSRFTOKEN": Cookies.get("csrftoken")}}).then(res => {
-		databases = res.data
+		databases = res.data.databases
+    available = res.data.available
 		loading = false
 	}).catch(err => {
 		console.error(err)
@@ -39,8 +42,16 @@
 
 <Link to="mysqlcreate"><button class="btn btn-primary" type="button">Upload Database (New Page)</button></Link>
 
-<table class="table table-hover">
-  <thead>
+  {#if databases.length === 0}
+  <div class="container text-center bg-secondary">
+    <h2>No Databases Found</h2>
+    <p>Please click <strong>Upload</strong> to add a Database</p>
+    <p>You have <strong>{available}</strong> {available == 1 ? "database" : "databases"} available</p>
+  </div>
+  {:else}  
+  
+  <table class="table table-hover">
+    <thead>
     <tr>
       <th>Database Name</th>
       <th>Username</th>
@@ -49,14 +60,15 @@
   </thead>
   <tbody>
     {#each databases as db}
-      <tr>
-        <Link to={`mysql/${db.id}`}>
-          <td>{db.name}</td>
-        </Link>
-        <td>{db.username}</td>
-        <td><button class="btn btn-danger" on:click={() => remove(db.id)}>Delete</button></td>
-      </tr>
+    <tr>
+      <Link to={`mysql/${db.id}`}>
+        <td>{db.name}</td>
+      </Link>
+      <td>{db.username}</td>
+      <td><button class="btn btn-danger" on:click={() => remove(db.id)}>Delete</button></td>
+    </tr>
     {/each}
-  </tbody>
-</table>
+    </tbody>
+  </table>
+  {/if}
 {/if}
