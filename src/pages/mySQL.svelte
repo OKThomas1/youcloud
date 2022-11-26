@@ -34,6 +34,7 @@
 {:else if error}
   <h1>{error}</h1>
 {:else}
+
 <h1 class="display-02">mySQL</h1>
 
 <Link to="mysqlcreate"><button class="btn btn-primary" type="button">Upload Database (New Page)</button></Link>

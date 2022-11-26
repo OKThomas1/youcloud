@@ -4,7 +4,6 @@
 	import { navigate } from "svelte-routing";
 	let error = null
 	let loading = false
-	let success = false
   const submit = (event)  =>{
 		loading = true
 		event.preventDefault()
@@ -15,7 +14,6 @@
 		axios.post("/api/node", formData, {headers:{"X-CSRFTOKEN": Cookies.get("csrftoken")}}).then(res => {
 			console.log("success")
 			loading = false
-			success = true
 			navigate("/nodejs", {replace: true})
 		}).catch(err => {
 			loading = false
@@ -41,10 +39,5 @@
 	<div class="alert alert-dismissible alert-danger">
 		<button type="button" class="btn-close" data-bs-dismiss="alert"></button>
 		<strong>{error}</strong> Try submitting again.
-	</div>
-	{:else if success}
-	<div class="alert alert-dismissible alert-success">
-		<button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-		<strong>Well done!</strong> You successfully uploaded a script
 	</div>
 {/if}
