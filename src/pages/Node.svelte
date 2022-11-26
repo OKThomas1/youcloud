@@ -1,4 +1,6 @@
 <script>
+  import { Link } from "svelte-routing"
+
 let loading = true
 let error=  null
 try {
@@ -15,12 +17,7 @@ const submit = (event)  =>{
 //     axios.delete(`/api/nodejs/{id}`)
 // }
 </script>
-<form on:submit={submit}>
-  <input type="file">
-  <button class="btn btn-primary" type="submit">Upload</button>
-
-</form>
-<button class="btn btn-primary" type="button"> Upload (New Page)</button>
+<Link to="nodecreate"><button class="btn btn-primary" type="button"> Upload (New Page)</button></Link>
 <table class="table table-bordered">
   <thead>
     <tr>
