@@ -12,7 +12,7 @@
 	import axios from "axios"
   import MySqlItem from "./pages/mySQLItem.svelte"
 
-	axios.defaults.baseURL = "http://localhost:8000"
+	axios.defaults.baseURL = window.location.origin 
 
   export let url = ""
 

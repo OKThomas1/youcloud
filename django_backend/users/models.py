@@ -30,3 +30,5 @@ class Website(models.Model):
 	id = models.AutoField(primary_key=True)
 	name = models.CharField(max_length=50)
 	user = models.ForeignKey(User, on_delete=models.CASCADE)
+	url = models.CharField(max_length=200)
+	folder = models.CharField(max_length=200)

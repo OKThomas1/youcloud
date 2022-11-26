@@ -8,9 +8,16 @@ from users.models import NodeScript, MySQLDatabase, Website
 from django.core.files.storage import FileSystemStorage
 from zipfile import ZipFile
 from random import randint
-from os import system, getcwd, chdir
+from os import system, getcwd, chdir, remove
 import mysql.connector
 from shutil import rmtree
+
+import environ
+
+env = environ.Env()
+environ.Env.read_env()
+
+
 
 # Create your views here.
 
@@ -26,7 +33,6 @@ class NodeView(APIView):
 		return Response(data, status=status.HTTP_200_OK)
 
 	def post(self, request, format=None):
-		print(request.data)
 		try:
 			zip = request.data['file']
 			path = f'{request.user.username}/nodejs/{randint(0,100000)}/'
@@ -34,16 +40,17 @@ class NodeView(APIView):
 			fs.save("unzip.zip", request.data['file'])
 			with ZipFile(f'{path}/unzip.zip', 'r') as zip:
 				zip.extractall(path)
+			remove(f'{path}/unzip.zip')
 			cwd = getcwd()
 			chdir(path)
 			system(f"npm install")
 			system(f"pm2 start index.js")
 			chdir(cwd)
 			NodeScript.objects.create(user=request.user, folder=path, name=request.data['name'])
+			return Response({"success": "Successfully uploaded nodejs script"}, status=status.HTTP_200_OK)
 		except Exception as e:
 			print(e)
 			return Response({"error": "Could not receive nodejs script"}, status=status.HTTP_400_BAD_REQUEST)
-		return Response({"success": "Successfully uploaded nodejs script"}, status=status.HTTP_200_OK)
 
 
 class NodeDetailView(APIView):
@@ -148,12 +155,53 @@ class WebsiteView(APIView):
 		return Response(data, status=status.HTTP_200_OK)
 
 	def post(self, request, format=None):
-		return 
+		name = request.data['name']
+		path = f'/var/www/{randint(0,100000)}/'
+		CONF_TEMPLATE = f"""
+		<VirtualHost *:443>
+
+			ServerName {name}.{env('DOMAIN')}
+			ServerAlias *.{name}.{env('DOMAIN')}
+			DocumentRoot {path}
+			FallbackResource /index.html
+	
+			SSLEngine on
+			SSLCertificateFile {env('SSLDOMAIN')}
+			SSLCertificateKeyFile {env('SSLKEY')}
+			SSLCertificateChainFile {env('SSLCHAIN')}
+
+		</VirtualHost>
+		"""
+
+		try:
+			zip = request.data['file']
+			fs = FileSystemStorage(location=path)
+			fs.save("unzip.zip", request.data['file'])
+			with ZipFile(f'{path}/unzip.zip', 'r') as zip:
+				zip.extractall(path)
+			remove(f'{path}/unzip.zip')
+			with open(f'/etc/apache2/sites-enabled/{request.user}{name}.conf', 'w') as file:
+				file.write(CONF_TEMPLATE)
+			system("sudo service apache2 reload")
+			Website.objects.create(user=request.user, name=name, url=f"{name}.{env('DOMAIN')}", folder=path)
+			return Response({"success": "Successfully uploaded website"}, status=status.HTTP_200_OK)
+		except Exception as e:
+			print(e)
+			return Response({"error": "Could not receive nodejs script"}, status=status.HTTP_400_BAD_REQUEST)
 
 		
 class WebsiteDetailView(APIView):
 	def delete(self, request, pk, format=None):
-		return
+		website = Website.objects.filter(pk=pk, user=request.user)
+		if len(website) == 1:
+			website = website[0]
+			remove(f'/etc/apache2/sites-enabled/{request.user}{website.name}.conf')
+			rmtree(website.folder)
+			system("sudo service apache2 reload")
+			website.delete()
+			return Response({"success": "Successfully deleted website"}, status=status.HTTP_200_OK)
+
+		return Response({"error": "Could not get database"}, status=status.HTTP_400_BAD_REQUEST)
 
 
 class GetSelfView(APIView):
