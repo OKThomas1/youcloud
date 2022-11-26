@@ -30,7 +30,7 @@ class NodeView(APIView):
 		data = []
 		for script in scripts:
 			data.append(NodeScriptSerializer(script).data)
-		return Response(data, status=status.HTTP_200_OK)
+		return Response({"scripts": data, "available": request.user.profile.nodejsAvaialable}, status=status.HTTP_200_OK)
 
 	def post(self, request, format=None):
 		try:
@@ -77,7 +77,7 @@ class MySQLView(APIView):
 		data = []
 		for database in databases:
 			data.append(MySQLDatabaseSerializer(database).data)
-		return Response(data, status=status.HTTP_200_OK)
+		return Response({"databases":data, "available": request.user.profile.mysqlAvailable}, status=status.HTTP_200_OK)
 
 	def post(self, request, format=None):
 		database = request.data['name']
@@ -152,7 +152,7 @@ class WebsiteView(APIView):
 		data = []
 		for website in websites:
 			data.append(WebsiteSerializer(website).data)
-		return Response(data, status=status.HTTP_200_OK)
+		return Response({"websites":data, "avaialable": request.user.profile.websitesAvailable}, status=status.HTTP_200_OK)
 
 	def post(self, request, format=None):
 		name = request.data['name']
