@@ -24,8 +24,8 @@
       
   <div class="container">
     <Route path="nodejs" component={Nodejs} />
-    <Route path="mysql" component={mySQL} />
-    <Route path="website" component={Website} />
+    <Route path="/mysql" component={mySQL} />
+    <Route path="/website" component={Website} />
     <Route path="/"><Home /></Route>
   </div>
 
