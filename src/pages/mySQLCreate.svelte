@@ -16,14 +16,21 @@
 
 </script>
 
-<h1 class="display-01">Create Database</h1>
+<h1 class="display-1 mb-5">Create Database</h1>
+<p>The <strong>	Username and Password </strong> is what you will use to access the database</p>
 
 <form on:submit={submit}>
-  <label for="database-name">Database Name</label>
-  <input id="database-name" type="text" name="name"/>
-  <label for="database-username">Username</label>
-  <input id="database-username" type="text" name="username"/>
-  <label for="database-password">Password</label>
-  <input id="database-password" type="password" name="password"/>
-  <button class="btn btn-primary" type="submit">Submit</button>
+	<div class="form-floating mb-3">
+		<input id="database-name" class="form-control" required placeholder="s" type="text" name="name"/>
+		<label for="database-name">Database Name</label>
+	</div>
+	<div class="form-floating mb-3">
+		<input id="database-username" class="form-control" required placeholder="s" type="text" name="username"/>
+		<label for="database-username" >Username</label>
+	</div>
+	<div class="form-floating mb-3">
+		<input id="database-password" class="form-control" required placeholder="s" type="password" name="password"/>
+		<label for="database-password" >Password</label>
+	</div>
+  <button class="btn btn-lg btn-primary" type="submit">Submit</button>
 </form>

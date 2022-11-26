@@ -44,7 +44,7 @@ import {Router, Link, Route} from "svelte-routing"
 <form on:submit={submit}>
 <input type="text" name="query">
 
-<button class="btn btn-disabled-secondary">Import Script (.sql)</button>
+<button class="btn btn-secondary disabled" >Import Script (.sql)</button>
 <button class="btn btn-primary" type="submit">Submit</button>
 </form>
 
