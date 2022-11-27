@@ -42,7 +42,7 @@
 {:else if error}
   <h1>{error}</h1>
 {:else}
-  <h1 class="display-2">Websites</h1>
+  <h1 class="display-2 mb-5">Websites</h1>
 
   <Link to="websitecreate"><button class="btn btn-primary" type="button"> Upload (New Page)</button></Link>
 

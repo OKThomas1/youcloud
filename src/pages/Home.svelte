@@ -25,7 +25,7 @@
 {:else if error}
   <h1>{error}</h1>
 {:else}
-  <p class="display-2" style="height:20rem;">Hello {user.username}</p>
+  <p class="display-2 mb-5" >Hello {user.username}</p>
 
   <div class="row" >
     <div class="col-md-4">

@@ -16,7 +16,7 @@
 
 </script>
 
-<h1 class="display-1 mb-5">Create Database</h1>
+<h1 class="display-2 mb-5">Create Database</h1>
 <p>The <strong>	Username and Password </strong> is what you will use to access the database</p>
 
 <form on:submit={submit}>
