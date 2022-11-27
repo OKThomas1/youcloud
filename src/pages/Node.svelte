@@ -52,7 +52,7 @@
   <button class="btn btn-primary" type="button" disabled={available === 0} on:click={() => navigate("nodecreate")}>Upload (New Page)</button>
 
   {#if scripts.length === 0}
-    <div class="container text-center">
+    <div class="container text-center mt-4">
       <h2>No Scripts Found</h2>
       <p>Please click <strong>Upload</strong> to add a Script</p>
     </div>

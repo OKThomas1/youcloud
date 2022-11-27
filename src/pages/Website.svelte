@@ -47,7 +47,7 @@
 <button class="btn btn-primary" disabled={available === 0} type="button" on:click={() => navigate("websitecreate")}> Upload (New Page)</button>
 
   {#if websites.length === 0}
-    <div class="container text-center">
+    <div class="container text-center mt-4">
       <h2>No Websites Found</h2>
       <p>Please click <strong>Upload</strong> to add a Website</p>
       <p>You have <strong>{available}</strong> {available == 1 ? "website" : "websites"} available</p>
