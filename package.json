@@ -5,7 +5,7 @@
   "scripts": {
     "delete": "del --force mysite/statics/assets",
     "dev": "vite",
-    "build": "npm run delete && vite build && npm run move",
+    "build": "vite build && npm run move",
     "move": "python mvindex.py",
     "serve": "vite preview",
     "watch": "python mvindex.py debug & vite build --watch "
