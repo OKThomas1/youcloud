@@ -151,6 +151,7 @@
 {/if}
 
 <main class="container">
+  <img src="todoapp-logo.png" alt="todoapp logo" width ="286" height = "58" />
   <Taskform on:filter-select={getTasks} on:submit-text={submitText}/>
   <Todolist Todo={items} on:delete-task={deleteTask} on:update-completed={updateCompleted}/>
 </main>

@@ -5,7 +5,5 @@
 </script>
 
 {#each Todo as td (td.id)}
-    <div in:scale out:fade={{ duration: 500 }}>
-        <Todotask task={td} on:delete-task on:update-completed />
-    </div>
+    <Todotask task={td} on:delete-task on:update-completed />
 {/each}
