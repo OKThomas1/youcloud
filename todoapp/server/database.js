@@ -3,10 +3,10 @@ const mysql = require('mysql2')
 require('dotenv').config();
 
 var connection = mysql.createConnection({
-    host : process.env.HOST,
-    user : process.env.USER,
-    password : process.env.PASSWORD,
-    database : process.env.DATABASE
+    host : process.env.TODOHOST,
+    user : process.env.TODOUSER,
+    password : process.env.TODOPASSWORD,
+    database : process.env.TODODATABASE
 })
 
 exports.databaseConnection = connection

@@ -4,6 +4,7 @@
   import Todolist from "./Todolist.svelte";
   import Taskform from "./Taskform.svelte";
   import axios from "axios";
+  axios.defaults.baseURL = "https://apilistoid.thomasbuchholz.dev"
   import {onMount} from 'svelte';
   let loading = true;
   let error = null;
@@ -26,7 +27,7 @@
 	})
 
   axios
-    .get("http://localhost:3001/")
+    .get("/")
     .then((res) => {
       items = res.data;
       loading = false;
@@ -43,7 +44,7 @@
 
     if(selectedval == 1) {
       axios
-    .get("http://localhost:3001/")
+    .get("/")
     .then((res) => {
       items = res.data;
       loading = false;
@@ -55,7 +56,7 @@
 
     }else if(selectedval == 2) {
       axios
-    .get("http://localhost:3001/incompleted/")
+    .get("/incompleted/")
     .then((res) => {
       items = res.data;
       loading = false;
@@ -66,7 +67,7 @@
     });
     } else {
       axios
-    .get("http://localhost:3001/completed/")
+    .get("/completed/")
     .then((res) => {
       items = res.data;
       loading = false;
@@ -83,7 +84,7 @@
     const taskId = e.detail;
 
     axios
-      .delete("http://localhost:3001/" + taskId + "/")
+      .delete("/" + taskId + "/")
       .then((res) => {
         console.log("Deleted", res);
       })
@@ -98,7 +99,7 @@
     const text = e.detail;
 
     axios
-    .post("http://localhost:3001/", {todo: text, postdate: dateString})
+    .post("/", {todo: text, postdate: dateString})
     .then((res) => {
       console.log(res.data);
       let newitem = {id: res.data.insertId, todo: text, completed: 0, postdate: dateString
@@ -122,14 +123,14 @@
   const updateCompleted = (e) => {
     const completed = e.detail;
     if(completed[0] == true) {
-      axios.put("http://localhost:3001/" + completed[1] + "/", {completed:1}).then((res) => {
+      axios.put("/" + completed[1] + "/", {completed:1}).then((res) => {
         console.log(res.data);
       }).catch((err) => {
         console.error(err);
         console.log(err);
       })
     }else {
-      axios.put("http://localhost:3001/" + completed[1] + "/", {completed:0}).then((res) => {
+      axios.put("/" + completed[1] + "/", {completed:0}).then((res) => {
         console.log(res.data);
       }).catch((err) => {
         console.error(err);
