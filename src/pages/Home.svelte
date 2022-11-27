@@ -39,7 +39,7 @@
 
   <div class="row" >
     <div class="col-md-4">
-      <div class="card border-primary mb-3" style="cursor: pointer;"  on:click={()=>navigate("/nodejs")} >
+      <div class="card border-primary mb-3" style="cursor: pointer;height:240px;"  on:click={()=>navigate("/nodejs")} >
         <div class="card-header"><Fa icon={faNodeJs} size="2.5x" /></div>
         <div class="card-body">
           <h4 class="card-title">Node</h4>
@@ -48,7 +48,7 @@
       </div>
     </div>
     <div class="col-md-4">
-      <div class="card border-primary mb-3" style="cursor: pointer;"  on:click={()=>navigate("/mysql")} >
+      <div class="card border-primary mb-3" style="cursor: pointer;height:240px;"  on:click={()=>navigate("/mysql")} >
           <div class="card-header"><Fa icon={faDatabase} size="2.5x" /></div>
           <div class="card-body">
             <h4 class="card-title">MySQL</h4>
@@ -57,7 +57,7 @@
         </div>
     </div>
     <div class="col-md-4">
-      <div class="card border-primary mb-3" style="cursor: pointer;"  on:click={()=>navigate("/website")} >
+      <div class="card border-primary mb-3" style="cursor: pointer;height:240px;"  on:click={()=>navigate("/website")} >
           <div class="card-header"><Fa icon={faGlobe} size="2.5x" /></div>
           <div class="card-body">
             <h4 class="card-title">Website Hosting</h4>
