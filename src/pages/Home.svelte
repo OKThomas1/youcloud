@@ -2,6 +2,10 @@
   import {Router, Link, Route, navigate} from "svelte-routing"
   import axios from "axios"
   import Cookies from "js-cookie"
+  import Fa from 'svelte-fa'
+  import { faDatabase, faGlobe } from '@fortawesome/free-solid-svg-icons'
+  import { faNodeJs} from '@fortawesome/free-brands-svg-icons'
+
   let loading = true
   let error = null
   let user = null
@@ -36,7 +40,7 @@
   <div class="row" >
     <div class="col-md-4">
       <div class="card border-primary mb-3" style="cursor: pointer;"  on:click={()=>navigate("/nodejs")} >
-        <div class="card-header">Icon</div>
+        <div class="card-header"><Fa icon={faNodeJs} size="2.5x" /></div>
         <div class="card-body">
           <h4 class="card-title">Node</h4>
           <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
@@ -45,7 +49,7 @@
     </div>
     <div class="col-md-4">
       <div class="card border-primary mb-3" style="cursor: pointer;"  on:click={()=>navigate("/mysql")} >
-          <div class="card-header">Icon</div>
+          <div class="card-header"><Fa icon={faDatabase} size="2.5x" /></div>
           <div class="card-body">
             <h4 class="card-title">MySQL</h4>
             <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
@@ -54,7 +58,7 @@
     </div>
     <div class="col-md-4">
       <div class="card border-primary mb-3" style="cursor: pointer;"  on:click={()=>navigate("/website")} >
-          <div class="card-header">Icon</div>
+          <div class="card-header"><Fa icon={faGlobe} size="2.5x" /></div>
           <div class="card-body">
             <h4 class="card-title">Website</h4>
             <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
