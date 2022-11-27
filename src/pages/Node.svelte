@@ -1,6 +1,6 @@
 <script>
   import axios from "axios"
-  import {Link} from "svelte-routing"
+  import {Link, navigate} from "svelte-routing"
   import Cookies from "js-cookie"
   let loading = true
   let error = null
@@ -21,6 +21,7 @@
 	const remove = (id)  =>{
 		axios.delete(`/api/node/${id}`, {headers: {"X-CSRFTOKEN": Cookies.get("csrftoken")}}).then(res => {
 			scripts = scripts.filter(s => s.id !== id)
+			available++
 		}).catch(err => {
 			console.error(err)
 			error = "Could not delete nodejs scripts"
@@ -46,15 +47,14 @@
 {:else if error}
   <h1>{error}</h1>
 {:else}
-  <h1 class="display-2">Node JS</h1>
+  <h1 class="display-2 mb-5">Node JS</h1>
 
-  <Link to="nodecreate"><button class="btn btn-primary" type="button">Upload (New Page)</button></Link>
+  <button class="btn btn-primary mb-4" type="button" disabled={available === 0} on:click={() => navigate("nodecreate")}>Upload (New Page)</button>
 
   {#if scripts.length === 0}
-    <div class="container text-center bg-secondary">
+    <div class="container text-center">
       <h2>No Scripts Found</h2>
       <p>Please click <strong>Upload</strong> to add a Script</p>
-      <p>You have <strong>{available}</strong> {available == 1 ? "script" : "scripts"} available</p>
     </div>
   {:else}
     <table class="table table-hover">
@@ -78,4 +78,5 @@
       </tbody>
     </table>
   {/if}
+  <p>You have <strong>{available}</strong> {available == 1 ? "script" : "scripts"} available</p>
 {/if}

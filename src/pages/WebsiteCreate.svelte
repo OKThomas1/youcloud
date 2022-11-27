@@ -15,12 +15,17 @@
 	}
 </script>
 
-  <h1 class="display-01">Website Upload</h1>
+  <h1 class="display-2 mb-5">Website Upload</h1>
 
   <form on:submit={submit}>
-    <label for="website-input">Website Name</label>
-    <input id="website-input"type="text" name="name" />
-    <input type="file" name="file"/>
-    <button class="btn btn-primary" type="submit">Upload</button>
+		<div class="form-floating mb-3">
+			<input id="website-name" class="form-control" required placeholder="s" type="text" name="name" />
+			<label for="website-name">Website Name</label>
+		</div>
+		<div class="mb-3">
+			<label for="formFile" class="form-label">Upload Website (.zip)</label>
+			<input class="form-control" type="file" name="file" id="formFile" accept=".zip">
+		</div>
+    <button class="btn btn-primary btn-lg" type="submit">Upload</button>
   </form>
 

@@ -36,16 +36,18 @@ import {Router, Link, Route} from "svelte-routing"
 {:else if error}
   <h1>{error}</h1>
 {:else}
-<h1 class="display-02">{database.name}</h1>
+<h1 class="display-2 mb-5">{database.name}</h1>
 
 <div class="form-group">
-  <textarea class="form-control" id="exampleTextarea" rows="20" readonly></textarea>
+  <textarea class="form-control" id="exampleTextarea" rows="15" readonly></textarea>
 </div>
 <form on:submit={submit}>
-<input type="text" name="query">
+	<div class="form-floating mb-3">
+		<input class="form-control" id="sql-input" type="text" required placeholder="s" name="query">
+		<label for="sql-input">SQL Query</label>
+	</div>
 
-<button class="btn btn-disabled-secondary">Import Script (.sql)</button>
-<button class="btn btn-primary" type="submit">Submit</button>
+<button class="btn btn-primary btn-lg" type="submit">Submit</button>
 </form>
 
 {/if}
