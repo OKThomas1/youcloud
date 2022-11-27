@@ -49,7 +49,7 @@
 {:else}
   <h1 class="display-2 mb-5">Node JS</h1>
 
-  <button class="btn btn-primary mb-4" type="button" disabled={available === 0} on:click={() => navigate("nodecreate")}>Upload (New Page)</button>
+  <button class="btn btn-primary" type="button" disabled={available === 0} on:click={() => navigate("nodecreate")}>Upload (New Page)</button>
 
   {#if scripts.length === 0}
     <div class="container text-center">

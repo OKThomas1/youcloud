@@ -18,8 +18,9 @@
   <h1 class="display-2 mb-5">Website Upload</h1>
 
   <form on:submit={submit}>
+		<p class="text-center">Your website will be available at *websitename*.*customdomain*</p>
 		<div class="form-floating mb-3">
-			<input id="website-name" class="form-control" required placeholder="s" type="text" name="name" />
+			<input id="website-name" class="form-control" required placeholder="s" type="text" name="name" autocomplete="off"/>
 			<label for="website-name">Website Name</label>
 		</div>
 		<div class="mb-3">
