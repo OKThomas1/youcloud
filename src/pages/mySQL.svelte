@@ -40,7 +40,7 @@
 
 <h1 class="display-2 mb-5">MySQL</h1>
 
-<button class="btn btn-primary" type="button" disabled={available === 0} on:click={() => navigate('mysqlcreate')}>Upload Database</button>
+<button class="btn btn-primary btn-lg" type="button" disabled={available === 0} on:click={() => navigate('mysqlcreate')}>Create Database</button>
 
   {#if databases.length === 0}
   <div class="container text-center mt-4">

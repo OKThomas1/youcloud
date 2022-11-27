@@ -44,7 +44,7 @@
 {:else}
   <h1 class="display-2 mb-5">Websites</h1>
 
-<button class="btn btn-primary" disabled={available === 0} type="button" on:click={() => navigate("websitecreate")}> Upload (New Page)</button>
+<button class="btn btn-primary btn-lg" disabled={available === 0} type="button" on:click={() => navigate("websitecreate")}> Upload Website</button>
 
   {#if websites.length === 0}
     <div class="container text-center mt-4">
