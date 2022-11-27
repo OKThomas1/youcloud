@@ -3,13 +3,13 @@
     import Button from "./Button.svelte";
     import Selectfilter from "./Selectfilter.svelte";
     import SelectFilter from "./Selectfilter.svelte";
-    import {createEventDispatcher} from 'svelte'
+    import { createEventDispatcher } from "svelte";
 
     let filter = 1;
     let text = "";
     let btnDisabled = true;
     let message;
-    const dispatch = createEventDispatcher()
+    const dispatch = createEventDispatcher();
 
     const handleInput = () => {
         if (text.trim().length < 4) {
@@ -22,8 +22,8 @@
     };
 
     const submitText = () => {
-        dispatch('submit-text', text)
-    }
+        dispatch("submit-text", text);
+    };
 </script>
 
 <Card>
@@ -31,11 +31,10 @@
         <h2>What do you need to get done today?</h2>
     </header>
     <form on:submit|preventDefault={submitText}>
-        <SelectFilter on:filter-select />
         <div class="input-group">
             <input
                 type="text"
-                id = "inputText"
+                id="inputText"
                 on:input={handleInput}
                 bind:value={text}
                 placeholder=""
@@ -48,6 +47,7 @@
                 {message}
             </div>
         {/if}
+        <SelectFilter on:filter-select />
     </form>
 </Card>
 
