@@ -60,9 +60,7 @@
   <tbody>
     {#each databases as db}
     <tr>
-      <Link to={`mysql/${db.id}`}>
-        <td>{db.name}</td>
-      </Link>
+      <td><Link to={`mysql/${db.id}`}>{db.name}</Link></td>
       <td>{db.username}</td>
       <td><button class="btn btn-danger" on:click={() => remove(db.id)}>Delete</button></td>
     </tr>
