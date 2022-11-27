@@ -15,6 +15,24 @@ app.get("/", (req, res) => {
     })
 })
 
+app.get("/incompleted", (req, res) => {
+
+    connection.query('SELECT * FROM todoapp WHERE completed = 0', (err, result) => {
+        if (err) throw err
+        //console.log(result)
+        res.send(result)
+    })
+})
+
+app.get("/completed", (req, res) => {
+
+    connection.query('SELECT * FROM todoapp WHERE completed = 1', (err, result) => {
+        if (err) throw err
+        //console.log(result)
+        res.send(result)
+    })
+})
+
 app.post("/", (req, res) => {
     //console.log(req.body)
     const todo = req.body.todo
