@@ -7,6 +7,7 @@
   let loading = true;
   let error = null;
   let items = [];
+
   axios
     .get("http://localhost:3001/")
     .then((res) => {
@@ -17,6 +18,49 @@
       console.error(err);
       error = "could not get items";
     });
+
+  const getTasks = (e) => {
+    const selectedval = e.detail;
+
+    items = [];
+
+    if(selectedval == 1) {
+      axios
+    .get("http://localhost:3001/")
+    .then((res) => {
+      items = res.data;
+      loading = false;
+    })
+    .catch((err) => {
+      console.error(err);
+      error = "could not get items";
+    });
+
+    }else if(selectedval == 2) {
+      axios
+    .get("http://localhost:3001/incompleted/")
+    .then((res) => {
+      items = res.data;
+      loading = false;
+    })
+    .catch((err) => {
+      console.error(err);
+      error = "could not get items";
+    });
+    } else {
+      axios
+    .get("http://localhost:3001/completed/")
+    .then((res) => {
+      items = res.data;
+      loading = false;
+    })
+    .catch((err) => {
+      console.error(err);
+      error = "could not get items";
+    });
+    }
+  }
+  
 
   const deleteTask = (e) => {
     const taskId = e.detail;
@@ -46,7 +90,7 @@
 {/if}
 
 <main class="container">
-  <Taskform />
+  <Taskform on:filter-select={getTasks}/>
   <Todolist Todo={items} on:delete-task={deleteTask} />
 </main>
 
