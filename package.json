@@ -17,8 +17,11 @@
     "vite": "^2.7.10"
   },
   "dependencies": {
+    "@fortawesome/free-brands-svg-icons": "^6.2.1",
+    "@fortawesome/free-solid-svg-icons": "^6.2.1",
     "axios": "^1.2.0",
     "js-cookie": "^3.0.1",
+    "svelte-fa": "^3.0.3",
     "svelte-routing": "^1.6.0"
   }
 }

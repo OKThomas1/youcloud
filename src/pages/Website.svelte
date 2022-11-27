@@ -44,10 +44,10 @@
 {:else}
   <h1 class="display-2 mb-5">Websites</h1>
 
-<button class="btn btn-primary" disabled={available === 0} type="button" on:click={() => navigate("websitecreate")}> Upload (New Page)</button>
+<button class="btn btn-primary btn-lg" disabled={available === 0} type="button" on:click={() => navigate("websitecreate")}> Upload Website</button>
 
   {#if websites.length === 0}
-    <div class="container text-center bg-secondary">
+    <div class="container text-center mt-4">
       <h2>No Websites Found</h2>
       <p>Please click <strong>Upload</strong> to add a Website</p>
       <p>You have <strong>{available}</strong> {available == 1 ? "website" : "websites"} available</p>

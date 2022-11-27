@@ -1,20 +1,34 @@
 <script>
-import {Router, Link, Route} from "svelte-routing"
+	import {Router, Link, Route} from "svelte-routing"
+	import { afterUpdate} from 'svelte';
+
+	afterUpdate(() => {
+		if(document.getElementById("exampleTextarea")) scrollToBottom(document.getElementById("exampleTextarea"));
+  })
+	const scrollToBottom = (node) => {
+    node.scroll({ top: node.scrollHeight, behavior: 'smooth' });
+  }
 	import axios from "axios"
 	import Cookies from "js-cookie"
   let loading = true
   let error = null
   let database = null
 	export let id
+	let output = ""
 
 	const submit = (event) => {
 		event.preventDefault()
 		let {query} = event.target.elements
 		axios.post(`/api/mysql/${id}`, {query: query.value}, {headers: {"X-CSRFTOKEN": Cookies.get("csrftoken")}}).then(res => {
 			console.log("success")
+			output += query.value + '\n'
+			output += res.data.output + "\n"
 			event.target.reset()
 		}).catch(err => {
 			console.error(err)
+			output += query.value + '\n'
+			event.target.reset()
+			output += "error executing query\n"
 		})
 	}
 
@@ -39,11 +53,11 @@ import {Router, Link, Route} from "svelte-routing"
 <h1 class="display-2 mb-5">{database.name}</h1>
 
 <div class="form-group">
-  <textarea class="form-control" id="exampleTextarea" rows="15" readonly></textarea>
+  <textarea class="form-control" id="exampleTextarea" rows="15" readonly bind:value={output}></textarea>
 </div>
 <form on:submit={submit}>
 	<div class="form-floating mb-3">
-		<input class="form-control" id="sql-input" type="text" required placeholder="s" name="query">
+		<input class="form-control" id="sql-input" type="text" required placeholder="s" name="query" autocomplete="off">
 		<label for="sql-input">SQL Query</label>
 	</div>
 

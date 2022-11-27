@@ -40,10 +40,10 @@
 
 <h1 class="display-2 mb-5">MySQL</h1>
 
-<button class="btn btn-primary" type="button" disabled={available === 0} on:click={() => navigate('mysqlcreate')}>Upload Database (New Page)</button>
+<button class="btn btn-primary btn-lg" type="button" disabled={available === 0} on:click={() => navigate('mysqlcreate')}>Create Database</button>
 
   {#if databases.length === 0}
-  <div class="container text-center bg-secondary">
+  <div class="container text-center mt-4">
     <h2>No Databases Found</h2>
     <p>Please click <strong>Upload</strong> to add a Database</p>
   </div>
@@ -60,9 +60,7 @@
   <tbody>
     {#each databases as db}
     <tr>
-      <Link to={`mysql/${db.id}`}>
-        <td>{db.name}</td>
-      </Link>
+      <td><Link to={`mysql/${db.id}`}>{db.name}</Link></td>
       <td>{db.username}</td>
       <td><button class="btn btn-danger" on:click={() => remove(db.id)}>Delete</button></td>
     </tr>
