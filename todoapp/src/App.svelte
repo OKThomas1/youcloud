@@ -118,6 +118,25 @@
 
 
   }
+
+  const updateCompleted = (e) => {
+    const completed = e.detail;
+    if(completed[0] == true) {
+      axios.put("http://localhost:3001/" + completed[1] + "/", {completed:1}).then((res) => {
+        console.log(res.data);
+      }).catch((err) => {
+        console.error(err);
+        console.log(err);
+      })
+    }else {
+      axios.put("http://localhost:3001/" + completed[1] + "/", {completed:0}).then((res) => {
+        console.log(res.data);
+      }).catch((err) => {
+        console.error(err);
+        console.log(err);
+      })
+    }
+  }
 </script>
 
 {#if loading}
@@ -133,7 +152,7 @@
 
 <main class="container">
   <Taskform on:filter-select={getTasks} on:submit-text={submitText}/>
-  <Todolist Todo={items} on:delete-task={deleteTask} />
+  <Todolist Todo={items} on:delete-task={deleteTask} on:update-completed={updateCompleted}/>
 </main>
 
 <style>

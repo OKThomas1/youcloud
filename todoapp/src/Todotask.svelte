@@ -8,12 +8,16 @@
     const deleteTask = (taskId) => {
         dispatch("delete-task", taskId);
     };
+
+    const updateCompleted = (taskId, taskCompleted) => {
+        dispatch("update-completed", [taskId, taskCompleted]);
+    }
 </script>
 
 <Card>
     <button class="close" on:click={() => deleteTask(task.id)}>X</button>
     <p class="text-display">{task.todo}</p>
-    <input class="checkbox" type="checkbox" bind:checked={task.completed} />
+    <input class="checkbox" type="checkbox" bind:checked={task.completed} on:change={() => updateCompleted(task.completed, task.id)} />
 </Card>
 
 <style>
