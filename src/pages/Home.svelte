@@ -43,7 +43,7 @@
         <div class="card-header"><Fa icon={faNodeJs} size="2.5x" /></div>
         <div class="card-body">
           <h4 class="card-title">Node</h4>
-          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+          <p class="card-text">Run your NodeJS express servers here. Start and stop your servers whenever you want through the UI.</p>
         </div>
       </div>
     </div>
@@ -52,7 +52,7 @@
           <div class="card-header"><Fa icon={faDatabase} size="2.5x" /></div>
           <div class="card-body">
             <h4 class="card-title">MySQL</h4>
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            <p class="card-text">Create a MySQL database and user. Send queries through the built in UI or connect remotely.</p>
           </div>
         </div>
     </div>
@@ -60,8 +60,8 @@
       <div class="card border-primary mb-3" style="cursor: pointer;"  on:click={()=>navigate("/website")} >
           <div class="card-header"><Fa icon={faGlobe} size="2.5x" /></div>
           <div class="card-body">
-            <h4 class="card-title">Website</h4>
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            <h4 class="card-title">Website Hosting</h4>
+            <p class="card-text">Host your static site or single page application through the website hosting service.</p>
           </div>
         </div>
     </div>
