@@ -16,6 +16,7 @@ class NodeScript(models.Model):
 	status = models.CharField(max_length=50, default="running")
 	user = models.ForeignKey(User, on_delete=models.CASCADE)
 	name = models.CharField(max_length=50)
+	port = models.IntegerField()
 
 
 class MySQLDatabase(models.Model):

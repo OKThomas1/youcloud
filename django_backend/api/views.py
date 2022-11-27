@@ -31,6 +31,25 @@ class NodeView(APIView):
 		return Response({"scripts": data, "available": request.user.profile.nodejsAvailable}, status=status.HTTP_200_OK)
 
 	def post(self, request, format=None):
+		name = request.data['name']
+		port = request.data['port']
+		CONF = f"""
+<VirtualHost *:443>
+	ServerName {name}.{env("DOMAIN")}
+	ServerAlias *.{name}.{env("DOMAIN")}
+	ProxyPreserveHost On
+	ProxyPass / http://127.0.0.1:{port}/
+	ProxyPassReverse / http://127.0.0.1:{port}/
+
+	SSLEngine on
+
+	SSLCertificateFile {env('SSLDOMAIN')}
+	SSLCertificateKeyFile {env('SSLKEY')}
+	SSLCertificateChainFile {env('SSLCHAIN')}
+</VirtualHost>
+		"""
+
+
 		try:
 			zip = request.data['file']
 			path = f'{request.user.username}/nodejs/{randint(0,100000)}/'
@@ -44,7 +63,10 @@ class NodeView(APIView):
 			system(f"npm install")
 			system(f"pm2 start index.js")
 			chdir(cwd)
-			NodeScript.objects.create(user=request.user, folder=path, name=request.data['name'])
+			with open(f'/etc/apache2/sites-enabled/{request.user}{name}.conf', 'w') as file:
+				file.write(CONF)
+			system("sudo service apache2 reload")
+			NodeScript.objects.create(user=request.user, folder=path, name=name, port=port)
 			request.user.profile.nodejsAvailable -= 1
 			request.user.profile.save()
 			return Response({"success": "Successfully uploaded nodejs script"}, status=status.HTTP_200_OK)
@@ -81,6 +103,8 @@ class NodeDetailView(APIView):
 				script = script[0]
 				system(f'pm2 delete {script.folder}/index.js')
 				rmtree(script.folder)
+				remove(f'/etc/apache2/sites-enabled/{request.user}{script.name}.conf')
+				system("sudo service apache2 reload")
 				script.delete()
 				request.user.profile.nodejsAvailable += 1
 				request.user.profile.save()
