@@ -1,10 +1,14 @@
 <script>
     import Taskform from "./Taskform.svelte";
+    import {createEventDispatcher} from 'svelte'
 
     let selected = 1;
 
-    const onChange = () => {
-        console.log(1);
+    const dispatch = createEventDispatcher()
+
+    const onChange = (e) => {
+        select = (e.currentTarget.value);
+        dispatch('filter-select', selected)
     };
 </script>
 

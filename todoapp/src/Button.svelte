@@ -12,7 +12,7 @@
     button {
         color: #fff;
         border: 0;
-        border-radius: 8px;
+        border-radius: 10%;
         color: #fff;
         width: 100px;
         height: 40px;

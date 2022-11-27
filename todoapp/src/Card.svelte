@@ -4,7 +4,7 @@
 
 <style>
     .card {
-        background-color: #d0b8a8;
+        background-color: #dfd3c3;
         color: #333;
         border-radius: 15px;
         padding: 40px 50px;

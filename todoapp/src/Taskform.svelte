@@ -25,7 +25,7 @@
         <h2>What do you need to get done today?</h2>
     </header>
     <form>
-        <SelectFilter />
+        <SelectFilter on:filter-select />
         <div class="input-group">
             <input
                 type="text"
