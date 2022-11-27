@@ -31,7 +31,7 @@
 
 <form on:submit={submit}>
   <div class="form-floating mb-3">
-    <input id="script-name" class="form-control" required placeholder="s" type="text" name="name" />
+    <input id="script-name" class="form-control" required placeholder="s" type="text" name="name" autocomplete="off"/>
     <label for="script-name">Script Name</label>
   </div>
 	<div class="mb-3">

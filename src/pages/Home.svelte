@@ -26,6 +26,12 @@
   <h1>{error}</h1>
 {:else}
   <p class="display-2 mb-5" >Hello {user.username}</p>
+  
+  <div class="container text-justify mb-5">
+    <p>You Have {user.nodejsAvailable} Node Scripts Available</p>
+    <p>You Have {user.mysqlAvailable} MySQL Databases Available</p>
+    <p>You Have {user.websitesAvailable} Websites Available</p>
+  </div>
 
   <div class="row" >
     <div class="col-md-4">

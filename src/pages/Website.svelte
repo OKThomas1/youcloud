@@ -1,6 +1,6 @@
 <script>
   import axios from "axios"
-  import {Link} from "svelte-routing"
+  import {Link, navigate} from "svelte-routing"
   import Cookies from "js-cookie"
 
   let loading = true
@@ -44,7 +44,7 @@
 {:else}
   <h1 class="display-2 mb-5">Websites</h1>
 
-  <Link to="websitecreate"><button class="btn btn-primary" type="button"> Upload (New Page)</button></Link>
+<button class="btn btn-primary" disabled={available === 0} type="button" on:click={() => navigate("websitecreate")}> Upload (New Page)</button>
 
   {#if websites.length === 0}
     <div class="container text-center bg-secondary">
