@@ -45,7 +45,7 @@ app.delete("/:id", (req, res) => {
 
     connection.query('DELETE FROM todoapp WHERE id=?',delid, (err, result) => {
         if (err) throw err
-        console.log(result)
+        //console.log(result)
         res.send(result)
     })
 })

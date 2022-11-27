@@ -1,8 +1,7 @@
 <script>
-	import {Router, Link, Route} from "svelte-routing"
+	import {Router, Link, Route, navigate} from "svelte-routing"
 	import axios from "axios"
 	import Cookies from "js-cookie"
-  import { detach_before_dev } from "svelte/internal"
   let loading = true
   let error = null
   let databases = null
@@ -22,6 +21,7 @@
 		axios.delete(`/api/mysql/${id}`,  {headers: {"X-CSRFTOKEN": Cookies.get("csrftoken")}}).then(res => {
 			console.log(res.data)
 			databases = databases.filter(db => db.id !== id)
+			available++
 		}).catch(err => {
 			console.error(err)
 			error = "Error deleting database"
@@ -40,13 +40,12 @@
 
 <h1 class="display-2 mb-5">MySQL</h1>
 
-<Link to="mysqlcreate"><button class="btn btn-primary" type="button">Upload Database (New Page)</button></Link>
+<button class="btn btn-primary mb-4" type="button" disabled={available === 0} on:click={() => navigate('mysqlcreate')}>Upload Database (New Page)</button>
 
   {#if databases.length === 0}
   <div class="container text-center bg-secondary">
     <h2>No Databases Found</h2>
     <p>Please click <strong>Upload</strong> to add a Database</p>
-    <p>You have <strong>{available}</strong> {available == 1 ? "database" : "databases"} available</p>
   </div>
   {:else}  
   
@@ -71,4 +70,5 @@
     </tbody>
   </table>
   {/if}
+  <p>You have <strong>{available}</strong> {available == 1 ? "database" : "databases"} available</p>
 {/if}
