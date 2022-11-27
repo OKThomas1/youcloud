@@ -17,7 +17,7 @@
 		}).catch(err => {
 			loading = false
 			console.error(err)
-			error = "Error uploading script"
+			error = "Error Uploading Website"
 		})
 	}
 </script>

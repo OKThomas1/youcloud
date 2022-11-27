@@ -27,11 +27,9 @@
       <div class="collapse navbar-collapse" id="navbarColor03">
         <ul class="navbar-nav me-auto">
           <li class="nav-item">
-            <a href="/logout/" class="navbar-brand">Logout
-              <span class="visually-hidden">(current)</span>
-            </a>
           </li>
         </ul>
+        <a href="/logout/" class="navbar-brand">Logout
       </div>
     </div>
   </nav>

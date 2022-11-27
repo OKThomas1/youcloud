@@ -3,14 +3,21 @@
 	import Cookies from "js-cookie"
 	import { navigate } from "svelte-routing";
 	let v = ""
+	let loading = false
+	let error  = null
   const submit = event => {
+		error = null
+		loading = true
 		event.preventDefault()
 		let {name, username, password} = event.target.elements
 		axios.post("/api/mysql", {name: name.value, username: username.value, password: password.value}, {headers: {"X-CSRFTOKEN": Cookies.get("csrftoken")}}).then(res => {
 			console.log(res.data)
+			loading = false
 			navigate("/mysql", {replace: true})
 		}).catch(err => {
+			loading = false
 			console.error(err)
+			error = "Error Creating Database"
 		})
 	}
 
@@ -34,3 +41,14 @@
 	</div>
   <button class="btn btn-lg btn-primary" type="submit">Submit</button>
 </form>
+
+{#if loading}
+  <div class="d-flex justify-content-center align-items-center">
+    <div class="my-5 spinner-border text-primary" style="width: 10rem; height: 10rem;" />
+  </div>
+{:else if error}
+  <div class="alert alert-dismissible alert-danger">
+    <button type="button" class="btn-close" data-bs-dismiss="alert" />
+    <strong>{error}</strong> Try submitting again.
+  </div>
+{/if}
