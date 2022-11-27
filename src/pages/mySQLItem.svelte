@@ -22,13 +22,13 @@
 		axios.post(`/api/mysql/${id}`, {query: query.value}, {headers: {"X-CSRFTOKEN": Cookies.get("csrftoken")}}).then(res => {
 			console.log("success")
 			output += query.value + '\n'
-			output += res.data.output + "\n"
+			output += ">> " + res.data.output + "\n"
 			event.target.reset()
 		}).catch(err => {
 			console.error(err)
 			output += query.value + '\n'
 			event.target.reset()
-			output += "error executing query\n"
+			output += ">> " +  "error executing query\n"
 		})
 	}
 
