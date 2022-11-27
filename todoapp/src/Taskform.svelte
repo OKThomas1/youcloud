@@ -3,14 +3,16 @@
     import Button from "./Button.svelte";
     import Selectfilter from "./Selectfilter.svelte";
     import SelectFilter from "./Selectfilter.svelte";
+    import {createEventDispatcher} from 'svelte'
 
     let filter = 1;
     let text = "";
     let btnDisabled = true;
     let message;
+    const dispatch = createEventDispatcher()
 
     const handleInput = () => {
-        if (text.trim().length < 5) {
+        if (text.trim().length < 4) {
             message = `Text must be at least 5 characters`;
             btnDisabled = true;
         } else {
@@ -18,17 +20,22 @@
             btnDisabled = false;
         }
     };
+
+    const submitText = () => {
+        dispatch('submit-text', text)
+    }
 </script>
 
 <Card>
     <header>
         <h2>What do you need to get done today?</h2>
     </header>
-    <form>
+    <form on:submit|preventDefault={submitText}>
         <SelectFilter on:filter-select />
         <div class="input-group">
             <input
                 type="text"
+                id = "inputText"
                 on:input={handleInput}
                 bind:value={text}
                 placeholder=""

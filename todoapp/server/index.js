@@ -40,7 +40,7 @@ app.post("/", (req, res) => {
 
     connection.query('INSERT INTO todoapp (todo, postdate) VALUES (?,?)', [todo, postdate], (err, result) => {
         if (err) throw err
-        //console.log(result)
+        console.log(result)
         res.send(result)
     })
 })
