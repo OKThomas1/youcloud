@@ -4,9 +4,26 @@
   import Todolist from "./Todolist.svelte";
   import Taskform from "./Taskform.svelte";
   import axios from "axios";
+  import {onMount} from 'svelte';
   let loading = true;
   let error = null;
   let items = [];
+
+  let now = new Date(), month, day, year;
+	let dateString;
+	
+	onMount(()=> {
+    month = '' + (now.getMonth() + 1),
+    day = '' + now.getDate(),
+    year = now.getFullYear();
+
+  if (month.length < 2) 
+    month = '0' + month;
+  if (day.length < 2) 
+    day = '0' + day;
+
+  dateString = [year, month, day].join('-');
+	})
 
   axios
     .get("http://localhost:3001/")
@@ -76,6 +93,31 @@
 
     items = items.filter((task) => task.id != taskId);
   };
+
+  const submitText = (e) => {
+    const text = e.detail;
+
+    axios
+    .post("http://localhost:3001/", {todo: text, postdate: dateString})
+    .then((res) => {
+      console.log(res.data);
+      let newitem = {id: res.data.insertId, todo: text, completed: 0, postdate: dateString
+      }
+      items = [...items,newitem]
+      document.getElementById("inputText").value = ""
+    })
+    .catch((err) => {
+      console.error(err);
+      console.log(err);
+      document.getElementById("inputText").value = ""
+      
+    });
+
+    
+
+
+
+  }
 </script>
 
 {#if loading}
@@ -90,7 +132,7 @@
 {/if}
 
 <main class="container">
-  <Taskform on:filter-select={getTasks}/>
+  <Taskform on:filter-select={getTasks} on:submit-text={submitText}/>
   <Todolist Todo={items} on:delete-task={deleteTask} />
 </main>
 
