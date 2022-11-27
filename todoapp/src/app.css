@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
 
 body {
   font-family: 'Poppins', sans-serif;
@@ -14,15 +14,14 @@ body {
   padding: 0 20px;
 }
 
-#app {
-  max-width: 1920px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
-}
+
 
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+}
+
+ul {
+  list-style: none;
 }

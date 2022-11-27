@@ -2,6 +2,7 @@
   import svelteLogo from "./assets/svelte.svg";
   import Counter from "./lib/Counter.svelte";
   import Todolist from "./Todolist.svelte";
+  import Taskform from "./Taskform.svelte";
   import axios from "axios";
   let loading = true;
   let error = null;
@@ -19,15 +20,17 @@
 
   const deleteTask = (e) => {
     const taskId = e.detail;
-    
-    axios.delete('http://localhost:3001/' + taskId + '/').then((res) => {
-      console.log("Deleted", res)
-    }).catch((err) => {
-      console.error(err)
-    })
 
-    items = items.filter((task) => task.id != taskId)
+    axios
+      .delete("http://localhost:3001/" + taskId + "/")
+      .then((res) => {
+        console.log("Deleted", res);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
 
+    items = items.filter((task) => task.id != taskId);
   };
 </script>
 
@@ -43,8 +46,16 @@
 {/if}
 
 <main class="container">
+  <Taskform />
   <Todolist Todo={items} on:delete-task={deleteTask} />
 </main>
 
 <style>
+  @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap");
+
+  :global(*) {
+    font-family: "Poppins", sans-serif;
+    text-decoration: none;
+    color: black;
+  }
 </style>
