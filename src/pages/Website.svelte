@@ -27,6 +27,7 @@
       .delete(`/api/websites/${id}`, {headers: {"X-CSRFTOKEN": Cookies.get("csrftoken")}})
       .then(res => {
         websites = websites.filter(w => w.id !== id)
+				available++
       })
       .catch(err => {
         console.error(err)

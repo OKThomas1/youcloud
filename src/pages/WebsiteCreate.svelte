@@ -1,6 +1,7 @@
 <script>
 	import Cookies from "js-cookie"
 	import axios from "axios"
+  import {navigate} from "svelte-routing"
 	let error = null
   let loading = false
   const submit = event => {
@@ -14,6 +15,7 @@
 		axios.post("/api/websites", formData, {headers:{"X-CSRFTOKEN": Cookies.get("csrftoken")}}).then(res => {
 			console.log(res)
 			loading = false
+			navigate("website")
 		}).catch(err => {
 			loading = false
 			console.error(err)
