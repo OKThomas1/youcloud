@@ -8,10 +8,11 @@
     error = null
     loading = true
     event.preventDefault()
-    let {file, name} = event.target.elements
+    let {file, name, port} = event.target.elements
     const formData = new FormData()
     formData.append("file", file.files[0])
     formData.append("name", name.value)
+    formData.append("port", port.value)
     axios
       .post("/api/node", formData, {headers: {"X-CSRFTOKEN": Cookies.get("csrftoken")}})
       .then(res => {
@@ -33,6 +34,10 @@
   <div class="form-floating mb-3">
     <input id="script-name" class="form-control" required placeholder="s" type="text" name="name" autocomplete="off"/>
     <label for="script-name">Script Name</label>
+  </div>
+  <div class="form-floating mb-3">
+    <input id="script-port" class="form-control" required placeholder="s" type="text" name="port" autocomplete="off"/>
+    <label for="script-port">Port</label>
   </div>
 	<div class="mb-3">
 		<label for="formFile" class="form-label">Upload Script (.zip)</label>
