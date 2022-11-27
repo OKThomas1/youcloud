@@ -1,7 +1,11 @@
 <script>
 	import Cookies from "js-cookie"
 	import axios from "axios"
+	let error = null
+  let loading = false
   const submit = event => {
+		error = null
+    loading = true
 		event.preventDefault()
 		let {file, name} = event.target.elements
 		const formData = new FormData()
@@ -9,8 +13,11 @@
 		formData.append('name', name.value)
 		axios.post("/api/websites", formData, {headers:{"X-CSRFTOKEN": Cookies.get("csrftoken")}}).then(res => {
 			console.log(res)
+			loading = false
 		}).catch(err => {
+			loading = false
 			console.error(err)
+			error = "Error uploading script"
 		})
 	}
 </script>
@@ -30,3 +37,13 @@
     <button class="btn btn-primary btn-lg" type="submit">Upload</button>
   </form>
 
+{#if loading}
+  <div class="d-flex justify-content-center align-items-center">
+    <div class="my-5 spinner-border text-primary" style="width: 10rem; height: 10rem;" />
+  </div>
+{:else if error}
+  <div class="alert alert-dismissible alert-danger">
+    <button type="button" class="btn-close" data-bs-dismiss="alert" />
+    <strong>{error}</strong> Try submitting again.
+  </div>
+{/if}
