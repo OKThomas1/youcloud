@@ -7,7 +7,7 @@
     const dispatch = createEventDispatcher()
 
     const onChange = (e) => {
-        select = (e.currentTarget.value);
+        selected = (e.currentTarget.value);
         dispatch('filter-select', selected)
     };
 </script>
