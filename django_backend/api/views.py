@@ -139,8 +139,10 @@ class MySQLDetailView(APIView):
 			try:
 				cursor = cnx.cursor()
 				cursor.execute(request.data['query'])
+				output = cursor.fetchall()
+				cnx.commit()
 				cnx.close()
-				return Response({"success": "Successfully created mysql database"}, status=status.HTTP_200_OK)
+				return Response({"success": "Successfully created mysql database", "output": str(output)}, status=status.HTTP_200_OK)
 			except Exception as e:
 				print(e)
 				cnx.close()
