@@ -1,5 +1,5 @@
 ## Created By:
-[@OkThomas1](https://github.com/OKThomas1) [@Esteban-Bermudez](https://github.com/Esteban-Bermudez) [@JDhillon24](https://github.com/JDhillon24) [stejay91](https://github.com/stejay91)
+[@OkThomas1](https://github.com/OKThomas1) [@Esteban-Bermudez](https://github.com/Esteban-Bermudez) [@JDhillon24](https://github.com/JDhillon24) [@stejay91](https://github.com/stejay91)
 
 ## Demo
 https://youtu.be/SJS_VaN-P-0
